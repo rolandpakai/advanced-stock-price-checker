@@ -1,0 +1,13 @@
+{
+    "watch": ["src"],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "ts",
+    "execMap": {
+      "ts": "ts-node --require dotenv/config --project tsconfig.tsnode.json ./src/index.ts dotenv_config_path=./.env"
+    },
+    "restartable": "rs",
+    "verbose": true
+  }
+

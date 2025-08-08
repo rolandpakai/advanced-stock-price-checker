@@ -1,0 +1,25 @@
+{
+  "preset": "ts-jest",
+  "setupFilesAfterEnv": ["./jest.setup.ts"],
+  "testEnvironment": "node",
+  "testMatch": ["<rootDir>/src/**/*.test.ts"],
+  "reporters": [
+    "default",
+    ["jest-junit", { "outputDirectory": "./junit", "outputName": "junit.xml" }]
+  ],
+  "coverageReporters": ["clover", "json", "lcov", "html", "text", "text-summary"],
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": ["src/**/*.ts"],
+  "restoreMocks": true,
+  "testPathIgnorePatterns": ["<rootDir>/node_modules/"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "coveragePathIgnorePatterns": ["<rootDir>/node_modules/"],
+  "haste": { 
+    "retainAllFiles": true 
+  },
+  "transform": {},
+  "watchPlugins": [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
+  ]
+}

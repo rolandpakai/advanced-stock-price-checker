@@ -1,0 +1,52 @@
+{
+  "name": "advanced-stock-price-checker",
+  "version": "1.0.0",
+  "author": "roland.pakai@gmail.com",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "description": "Advanced Stock Price Checker",
+  "scripts": {
+    "start": "node -r dotenv/config ./dist/index.js dotenv_config_path=./.env",
+    "start:dev": "nodemon --exec ts-node -r dotenv/config src/index.ts dotenv_config_path=./.env",
+    "build": "tsc --build tsconfig.json",
+    "test": "jest",
+    "test:coverage": "jest --coverage --silent",
+    "test:watch": "jest --watchAll",
+    "clean": "rimraf node_modules dist",
+    "production": "tsc --build tsconfig.json --declaration false --sourceMap false",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@prisma/client": "6.13.0",
+    "axios": "1.11.0",
+    "dotenv": "16.4.7",
+    "express": "5.1.0",
+    "node-cron": "4.2.1",
+    "prisma": "6.13.0",
+    "sqlite3": "5.1.7",
+    "swagger-ui-express": "5.0.1",
+    "yamljs": "0.3.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "29.5.0",
+    "@types/express": "5.0.0",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.10.9",
+    "@types/sqlite3": "3.1.11",
+    "@types/supertest": "6.0.3",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "eslint": "8.57.1",
+    "jest": "29.7.0",
+    "jest-junit": "16.0.0",
+    "jest-watch-typeahead": "2.2.2",
+    "nodemon": "3.1.10",
+    "rimraf": "6.0.1",
+    "supertest": "7.1.4",
+    "ts-jest": "29.4.1",
+    "ts-loader": "9.5.2",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.2",
+    "typescript-eslint": "8.39.0"
+  }
+}

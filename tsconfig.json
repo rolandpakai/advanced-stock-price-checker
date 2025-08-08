@@ -1,0 +1,43 @@
+{
+  "include": [
+    "src/**/*",
+    "eslint.config.js",
+  ],
+  "exclude": [
+    "coverage",
+    "node_modules",
+    "dist",
+    "junit",
+    "tests"
+  ],
+  "compilerOptions": {
+    /* Output & declarations */
+    "outDir": "./dist",
+    "declaration": true,
+
+    /* Debugging support */
+    "sourceMap": true,
+
+    /* Language settings */
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext", "DOM"],
+
+    /* Type safety */
+    "strict": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module compatibility */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Jest & Node types */
+    "types": ["node", "jest"],
+
+    /* Incremental builds */
+    "incremental": true
+  }
+}

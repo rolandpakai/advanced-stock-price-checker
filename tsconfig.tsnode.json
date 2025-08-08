@@ -1,0 +1,17 @@
+{
+    "exclude": [
+        "coverage",
+        "node_modules",
+        "dist",
+        "junit",
+        "tests"
+    ],
+    "compilerOptions": {
+        "outDir": "./dist",
+        "target": "ESNext",
+        "lib": [
+            "ESNext.String"
+        ],
+        "esModuleInterop": true
+    }
+}

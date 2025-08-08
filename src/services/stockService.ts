@@ -1,8 +1,9 @@
+import z from "zod";
 import { RequiredError } from "finnhub-ts/dist/base";
 import finnhubClient from "../clients/finnhubClient";
 import { StockQuoteDTO } from "../models/stockQuote.dto";
 import { QuoteSchema } from "../schemas/QuoteSchema";
-import z from "zod";
+import { getLastNStockQuote } from "../repositories/stockQuote";
 
 export const fetchStockQuote = async (symbol: string): Promise<StockQuoteDTO> => {   
   try {
@@ -31,3 +32,16 @@ export const fetchStockQuote = async (symbol: string): Promise<StockQuoteDTO> =>
     throw new Error(`Failed to fetch stock price for ${symbol} due to unknown error`);
   }
 };
+
+export async function calculateMovingAverage(symbol: string, limit: number = 10): Promise<number | null> {
+  const stockQuotes = await getLastNStockQuote(symbol, limit);
+
+  if (stockQuotes.length === 0) {
+    return null;
+  }
+
+  const sum = stockQuotes.reduce((acc, sq) => acc + sq.price, 0);
+  const avg = sum / stockQuotes.length;
+
+  return Number(avg.toFixed(2));
+}

@@ -1,32 +1,22 @@
-import { finnhubClient } from "../clients/finnhubClient";
 import { RequiredError } from "finnhub-ts/dist/base";
-import { z } from "zod";
+import finnhubClient from "../clients/finnhubClient";
+import { StockQuoteDTO } from "../models/stockQuote.dto";
+import { QuoteSchema } from "../schemas/QuoteSchema";
+import z from "zod";
 
-const QuoteSchema = z.object({
-  c: z.number().optional(),
-  o: z.number().optional(),
-  h: z.number().optional(),
-  l: z.number().optional(),
-  pc: z.number().optional(),
-  d: z.number().optional(),
-  dp: z.number().optional(),
-});
-
-export type StockQuote = {
-  symbol: string;
-  currentPrice: number | undefined;
-  timestamp: number;
-};
-
-export const fetchStockPrice = async (symbol: string): Promise<StockQuote> => {   
+export const fetchStockQuote = async (symbol: string): Promise<StockQuoteDTO> => {   
   try {
     const response = await finnhubClient.quote(symbol);
     const data = QuoteSchema.parse(response.data);
 
+    if (data.c === undefined) {
+      throw new Error(` Undefined current price received from Finnhub API for symbol '${symbol}'`);
+    }
+
     return {
       symbol,
       currentPrice: data.c,
-      timestamp: Date.now(),
+      timestamp: new Date(),
     };
   } catch (error: unknown) {
     if (error instanceof RequiredError) {

@@ -10,7 +10,7 @@ datasource db {
 model StockQuote {
   id         Int      @id @default(autoincrement())
   symbol     String
-  price      Float
+  currentPrice      Float
   timestamp  DateTime
   createdAt  DateTime @default(now())
 

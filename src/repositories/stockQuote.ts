@@ -6,7 +6,7 @@ export const storeStockQuote = (stockQuote: StockQuoteDTO): Promise<StockQuote> 
   return prismaClient.stockQuote.create({
     data: {
       symbol: stockQuote.symbol,
-      price: stockQuote.currentPrice,
+      currentPrice: stockQuote.currentPrice,
       timestamp: stockQuote.timestamp,
     },
   });

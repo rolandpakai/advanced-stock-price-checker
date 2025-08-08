@@ -17,3 +17,11 @@ export const getStockQuote = (id: number): Promise<StockQuote | null> => {
     where: { id },
   });
 };
+
+export async function getLastNStockQuote(symbol: string, limit: number = 10): Promise<StockQuote[]> {
+  return prismaClient.stockQuote.findMany({
+    where: { symbol },
+    orderBy: { timestamp: "desc" },
+    take: limit,
+  });
+}

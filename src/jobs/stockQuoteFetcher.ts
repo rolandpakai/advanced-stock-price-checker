@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import { fetchStockQuote } from "../services/stockService";
-import { saveStockQuote } from "../repositories/stockQuote";
+import { storeStockQuote } from "../repositories/stockQuote";
 
 export const startStockQuoteFetcherJob = (symbol: string, interval = "0 * * * * *") => {
   cron.schedule(interval, async () => {
@@ -8,10 +8,10 @@ export const startStockQuoteFetcherJob = (symbol: string, interval = "0 * * * * 
 
     try {
       const stockQuote = await fetchStockQuote(symbol);
-      await saveStockQuote(stockQuote);
-      console.log(`Saved quote for ${symbol}: $${stockQuote.currentPrice}`);
+      await storeStockQuote(stockQuote);
+      console.log(`Stored quote for ${symbol}: $${stockQuote.currentPrice}`);
     } catch (error) {
-      console.error(`Failed to fetch/save stock quote for ${symbol}:`, error);
+      console.error(`Failed to fetch/store stock quote for ${symbol}:`, error);
     }
   });
 };

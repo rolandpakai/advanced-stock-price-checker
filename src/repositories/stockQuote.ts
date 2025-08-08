@@ -2,7 +2,7 @@ import { StockQuote } from "@prisma/client/wasm";
 import { StockQuoteDTO } from "../models/stockQuote.dto";
 import prismaClient from "../clients/prismaClient";
 
-export const saveStockQuote = (stockQuote: StockQuoteDTO): Promise<StockQuote> => {
+export const storeStockQuote = (stockQuote: StockQuoteDTO): Promise<StockQuote> => {
   return prismaClient.stockQuote.create({
     data: {
       symbol: stockQuote.symbol,

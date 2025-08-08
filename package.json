@@ -28,7 +28,8 @@
     "prisma": "6.13.0",
     "sqlite3": "5.1.7",
     "swagger-ui-express": "5.0.1",
-    "yamljs": "0.3.0"
+    "yamljs": "0.3.0",
+    "zod": "4.0.15"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

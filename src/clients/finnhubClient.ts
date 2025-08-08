@@ -4,7 +4,7 @@ if (!process.env.FINNHUB_API_KEY) {
   throw new Error("Missing FINNHUB_API_KEY in environment variables");
 }
 
-export const finnhubClient = new DefaultApi({
+const finnhubClient = new DefaultApi({
   apiKey: process.env.FINNHUB_API_KEY,
   isJsonMime: (input) => {
     try {
@@ -15,3 +15,5 @@ export const finnhubClient = new DefaultApi({
     }
   },
 });
+
+export default finnhubClient;

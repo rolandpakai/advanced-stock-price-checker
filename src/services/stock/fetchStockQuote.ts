@@ -10,7 +10,7 @@ export const fetchStockQuote = async (symbol: string): Promise<StockQuoteDTO> =>
     const data = QuoteSchema.parse(response.data);
 
     if (data.c === undefined) {
-      throw new Error(` Undefined current price received from Finnhub API for symbol '${symbol}'`);
+      throw new Error(`Undefined current price received from Finnhub API for symbol '${symbol}'`);
     }
 
     return {

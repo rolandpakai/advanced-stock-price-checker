@@ -84,6 +84,33 @@ describe("startStockJob Controller", () => {
     expect(activeJobs.has("AAPL")).toBe(false);
   });
 
+  it("should handle invalid symbol validation", async () => {
+    req.params = { symbol: "" };
+
+    startStockJob(req as Request, res as Response);
+
+    expect(mockStartStockQuoteFetcherJob).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Failed to start scheduled job",
+      details: "No symbol provided: ''"
+    });
+    expect(activeJobs.has("AAPL")).toBe(false);
+  });
+
+  it("should handle whitespace-only symbol validation", async () => {
+    req.params = { symbol: "   " };
+
+    startStockJob(req as Request, res as Response);
+
+    expect(mockStartStockQuoteFetcherJob).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Failed to start scheduled job",
+      details: "No symbol provided: '   '"
+    });
+  });
+
   it("should handle starting the same job twice", async () => {
     activeJobs.set("AAPL", mockJob as ScheduledTask);
   

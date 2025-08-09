@@ -16,7 +16,7 @@ export const startStockJob = (req: Request, res: Response) => {
     const validatedSymbol = validateSymbol(symbol);
 
     if (activeJobs.has(validatedSymbol)) {
-      return res.status(409).json({ message: `Scheduled job already running for ${symbol}` });
+      return res.status(409).json({ message: `Scheduled job already running for ${validatedSymbol}` });
     }
 
     const job = startStockQuoteFetcherJob(validatedSymbol, "0 * * * * *");

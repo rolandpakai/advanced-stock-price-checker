@@ -26,7 +26,7 @@ export const getStock = async (req: Request, res: Response) => {
       movingAverage: movingAvg,
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({ error: "Failed to get stock data", details: error instanceof Error ? error.message : String(error) });
   }
 };

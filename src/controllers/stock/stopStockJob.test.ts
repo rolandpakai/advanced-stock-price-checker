@@ -96,4 +96,28 @@ describe("stopStockJob Controller", () => {
       message: "No scheduled job found for AAPL"
     });
   });
+
+  it("should handle invalid symbol validation", async () => {
+    req.params = { symbol: "" };
+
+    stopStockJob(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Failed to stop scheduled job",
+      details: "No symbol provided: ''"
+    });
+  });
+
+  it("should handle whitespace-only symbol validation", async () => {
+    req.params = { symbol: "   " };
+
+    stopStockJob(req as Request, res as Response);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      error: "Failed to stop scheduled job",
+      details: "No symbol provided: '   '"
+    });
+  });
 });

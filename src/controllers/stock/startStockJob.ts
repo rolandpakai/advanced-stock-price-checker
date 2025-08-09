@@ -10,13 +10,11 @@ export const setActiveJobs = (jobs: Map<string, ScheduledTask>) => {
 };
 
 export const startStockJob = (req: Request, res: Response) => {
-  const symbol = req.params.symbol.toUpperCase();
-
   try {
-    const validatedSymbol = validateSymbol(symbol);
+    const validatedSymbol = validateSymbol(req.params.symbol);
 
     if (activeJobs.has(validatedSymbol)) {
-      return res.status(409).json({ message: `Scheduled job already running for ${symbol}` });
+      return res.status(409).json({ message: `Scheduled job already running for ${validatedSymbol}` });
     }
 
     const job = startStockQuoteFetcherJob(validatedSymbol, "0 * * * * *");

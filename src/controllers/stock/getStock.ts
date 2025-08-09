@@ -4,19 +4,17 @@ import { getMovingAverage } from "../../services/stock";
 import { validateSymbol } from "../../utils";
 
 export const getStock = async (req: Request, res: Response) => {
-  const symbol = req.params.symbol.toUpperCase();
-
   try {
-    const validatedSymbol = validateSymbol(symbol);
+    const validatedSymbol = validateSymbol(req.params.symbol);
     const stockData = await getLastNStockQuote(validatedSymbol, 1);
     const movingAvg = await getMovingAverage(validatedSymbol, 10);
     
     if (stockData.length === 0) {
-      return res.status(404).json({ error: `No stock data found for symbol '${symbol}'` });
+      return res.status(404).json({ error: `No stock data found for symbol '${validatedSymbol}'` });
     }
 
     if (!movingAvg) {
-      return res.status(404).json({ error: `No moving average data found for symbol '${symbol}'` });
+      return res.status(404).json({ error: `No moving average data found for symbol '${validatedSymbol}'` });
     }
     
     res.json({
@@ -26,7 +24,7 @@ export const getStock = async (req: Request, res: Response) => {
       movingAverage: movingAvg,
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({ error: "Failed to get stock data", details: error instanceof Error ? error.message : String(error) });
   }
 };

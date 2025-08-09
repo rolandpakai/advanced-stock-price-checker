@@ -9,10 +9,8 @@ export const setActiveJobs = (jobs: Map<string, ScheduledTask>) => {
 };
 
 export const stopStockJob = (req: Request, res: Response) => {
-  const symbol = req.params.symbol.toUpperCase();
-
   try {
-    const validatedSymbol = validateSymbol(symbol);
+    const validatedSymbol = validateSymbol(req.params.symbol);
     const task = activeJobs.get(validatedSymbol);
 
     if (!task) {

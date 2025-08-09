@@ -42,6 +42,30 @@ describe("fetchStockQuote", () => {
     expect(mockFinnhubClient.quote).toHaveBeenCalledWith("AAPL");
   });
 
+  it("should normalize lowercase symbols", async () => {
+    const mockResponse = {
+      data: {
+        c: 150.5,
+        o: 149.0,
+        h: 151.0,
+        l: 148.5,
+        pc: 149.5,
+        d: 1.0,
+        dp: 0.67
+      }
+    } as any;
+    mockFinnhubClient.quote.mockResolvedValue(mockResponse);
+
+    const result = await fetchStockQuote("aapl");
+
+    expect(result).toEqual({
+      symbol: "AAPL",
+      currentPrice: 150.5,
+      timestamp: new Date("2025-08-09T10:00:00.000Z")
+    });
+    expect(mockFinnhubClient.quote).toHaveBeenCalledWith("AAPL");
+  });
+
   it("should throw error when current price is undefined", async () => {
     const mockResponse = {
       data: {
@@ -82,24 +106,32 @@ describe("fetchStockQuote", () => {
     expect(mockFinnhubClient.quote).toHaveBeenCalledWith("XYZ");
   });
 
-  it("should handle ZodError for no symbol", async () => {
-    const mockResponse = {
-      data: {
-        c: 0,
-        o: 0,
-        h: 0,
-        l: 0,
-        pc: 0,
-        d: null,
-        dp: null
-      }
-    } as any;
-    mockFinnhubClient.quote.mockResolvedValue(mockResponse);
-
+  it("should handle Error for no symbol", async () => {
     await expect(fetchStockQuote("")).rejects.toThrow(
-      "Invalid data format received from Finnhub API for symbol ''"
+      "Failed to fetch stock price for : No symbol provided: ''"
     );
-    expect(mockFinnhubClient.quote).toHaveBeenCalledWith("");
+    expect(mockFinnhubClient.quote).not.toHaveBeenCalled();
+  });
+
+  it("should handle null symbol", async () => {
+    await expect(fetchStockQuote(null as any)).rejects.toThrow(
+      "Failed to fetch stock price for null: No symbol provided: 'null'"
+    );
+    expect(mockFinnhubClient.quote).not.toHaveBeenCalled();
+  });
+
+  it("should handle undefined symbol", async () => {
+    await expect(fetchStockQuote(undefined as any)).rejects.toThrow(
+      "Failed to fetch stock price for undefined: No symbol provided: 'undefined'"
+    );
+    expect(mockFinnhubClient.quote).not.toHaveBeenCalled();
+  });
+
+  it("should handle whitespace-only symbol", async () => {
+    await expect(fetchStockQuote("   ")).rejects.toThrow(
+      "Failed to fetch stock price for    : No symbol provided: '   '"
+    );
+    expect(mockFinnhubClient.quote).not.toHaveBeenCalled();
   });
 
   it("should handle ZodError for invalid data format", async () => {

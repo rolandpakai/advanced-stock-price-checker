@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  advanced-stock-price-checker-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: advanced-stock-price-checker-dev
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+    volumes:
+      # Mount source code for hot reloading
+      - ./src:/app/src
+    restart: unless-stopped

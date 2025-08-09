@@ -2,8 +2,8 @@ import z from "zod";
 import { RequiredError } from "finnhub-ts/dist/base";
 import finnhubClient from "../clients/finnhubClient";
 import { StockQuoteDTO } from "../models/stockQuote.dto";
-import { QuoteSchema } from "../schemas/QuoteSchema";
 import { getLastNStockQuote } from "../repositories/stockQuote";
+import { QuoteSchema } from "../schemas";
 
 export const fetchStockQuote = async (symbol: string): Promise<StockQuoteDTO> => {   
   try {

@@ -8,6 +8,9 @@
       "ts": "ts-node --require dotenv/config --project tsconfig.tsnode.json ./src/index.ts dotenv_config_path=./.env"
     },
     "restartable": "rs",
-    "verbose": true
+    "verbose": true,
+    "legacyWatch": true,
+    "polling": true,
+    "pollInterval": 1000
   }
 

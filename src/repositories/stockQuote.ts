@@ -1,27 +1,3 @@
-import { StockQuote } from "@prisma/client";
-import { StockQuoteDTO } from "../models/stockQuote.dto";
-import prismaClient from "../clients/prismaClient";
-
-export const storeStockQuote = (stockQuote: StockQuoteDTO): Promise<StockQuote> => {
-  return prismaClient.stockQuote.create({
-    data: {
-      symbol: stockQuote.symbol,
-      currentPrice: stockQuote.currentPrice,
-      timestamp: stockQuote.timestamp,
-    },
-  });
-};
-
-export const getStockQuote = (id: number): Promise<StockQuote | null> => {
-  return prismaClient.stockQuote.findUnique({
-    where: { id },
-  });
-};
-
-export async function getLastNStockQuote(symbol: string, limit: number = 10): Promise<StockQuote[]> {
-  return prismaClient.stockQuote.findMany({
-    where: { symbol },
-    orderBy: { timestamp: "desc" },
-    take: limit,
-  });
-}
+export * from "./stockQuote/storeStockQuote";
+export * from "./stockQuote/getStockQuote";
+export * from "./stockQuote/getLastNStockQuote";

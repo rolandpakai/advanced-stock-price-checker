@@ -1,4 +1,4 @@
-import { StockQuote } from "@prisma/client/wasm";
+import { StockQuote } from "@prisma/client";
 import { StockQuoteDTO } from "../models/stockQuote.dto";
 import prismaClient from "../clients/prismaClient";
 

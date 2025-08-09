@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Server } from "http";
 import server from "./server";
 import { getPort } from "./utils";

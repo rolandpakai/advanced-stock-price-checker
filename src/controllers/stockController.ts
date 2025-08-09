@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ScheduledTask } from "node-cron";
 import { getLastNStockQuote } from "../repositories/stockQuote";
-import { getMovingAverage } from "../services/stockService";
+import { getMovingAverage } from "../services/stock";
 import { startStockQuoteFetcherJob } from "../jobs/stockQuoteFetcher";
 
 const activeJobs = new Map<string, ScheduledTask>();

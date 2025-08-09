@@ -1,5 +1,5 @@
 import cron, { ScheduledTask } from "node-cron";
-import { fetchStockQuote } from "../services/stockService";
+import { fetchStockQuote } from "../services/stock";
 import { storeStockQuote } from "../repositories/stockQuote";
 
 export const startStockQuoteFetcherJob = (symbol: string, interval = "* * * * *"): ScheduledTask => {

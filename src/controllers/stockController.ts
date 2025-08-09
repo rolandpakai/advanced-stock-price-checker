@@ -40,14 +40,16 @@ export const startStockJob = (req: Request, res: Response) => {
     return res.status(409).json({ message: `Scheduled job already running for ${symbol}` });
   }
 
-  const job = startStockQuoteFetcherJob(symbol);
-  activeJobs.set(symbol, job);
-  res.status(201).json({ message: `Started scheduled job for ${symbol}` });
-};
+  try {
+    const job = startStockQuoteFetcherJob(symbol, "0 * * * * *");
+    activeJobs.set(symbol, job);
+    res.status(201).json({ message: `Started scheduled job for ${symbol}` });
+  } catch (error: unknown) {
+    res.status(500).json({ error: "Failed to start scheduled job", details: error instanceof Error ? error.message : String(error) });
+  }};
 
 export const stopStockJob = (req: Request, res: Response) => {
   const symbol = req.params.symbol.toUpperCase();
-
   const task = activeJobs.get(symbol);
 
   if (!task) {

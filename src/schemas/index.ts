@@ -1,1 +1,1 @@
-export * from "./quoteSchemas";
+export * from "./quoteSchema";

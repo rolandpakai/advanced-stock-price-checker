@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  advanced-stock-price-checker-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: advanced-stock-price-checker-dev
+    ports:
+      - "9000:9000"
+    environment:
+      - NODE_ENV=development
+      - PORT=9000
+      - DATABASE_URL=file:./sqlite.db
+      - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+    volumes:
+      # Mount source code for hot reloading with proper bind mount
+      - type: bind
+        source: ./src
+        target: /app/src
+      - type: bind
+        source: ./prisma
+        target: /app/prisma
+      - type: bind
+        source: ./package.json
+        target: /app/package.json
+      - type: bind
+        source: ./tsconfig.json
+        target: /app/tsconfig.json
+      - type: bind
+        source: ./nodemon.json
+        target: /app/nodemon.json
+      # Persist database
+      - stock_dev_data:/app/data
+    restart: unless-stopped
+    command: npm run start:dev
+    networks:
+      - stock-dev-network
+
+volumes:
+  stock_dev_data:
+    driver: local
+
+networks:
+  stock-dev-network:
+    driver: bridge

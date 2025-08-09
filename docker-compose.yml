@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  advanced-stock-price-checker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: advanced-stock-price-checker
+    ports:
+      - "9000:9000"
+    environment:
+      - NODE_ENV=production
+      - PORT=9000
+      - DATABASE_URL=file:./sqlite.db
+      - FINNHUB_API_KEY=${FINNHUB_API_KEY}
+    volumes:
+      # Mount a volume for the SQLite database to persist data
+      - stock_data:/app/data
+      # Override the DATABASE_URL to use the mounted volume
+      - ./prisma/sqlite.db:/app/sqlite.db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - stock-network
+
+volumes:
+  stock_data:
+    driver: local
+
+networks:
+  stock-network:
+    driver: bridge

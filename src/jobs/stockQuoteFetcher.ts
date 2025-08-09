@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import cron, { ScheduledTask } from "node-cron";
 import { fetchStockQuote } from "../services/stock";
 import { storeStockQuote } from "../repositories/stockQuote";

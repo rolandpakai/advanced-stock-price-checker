@@ -1,5 +1,6 @@
 import { Server } from "http";
 import server from "./server";
+import { getPort } from "./utils";
 
 export function startServer(server: Server, port: number) {
   try {
@@ -11,4 +12,4 @@ export function startServer(server: Server, port: number) {
   }
 }
 
-startServer(server, Number(process.env.PORT) || 9000);
+startServer(server, getPort());

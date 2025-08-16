@@ -6,6 +6,9 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    ignores: ["dist/**", "coverage/**", "node_modules/**", "*.js"],
+  },
+  {
     languageOptions: {
       globals: {
         ...globals.node,

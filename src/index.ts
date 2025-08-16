@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
 import { Server } from "http";
 import server from "./server";
-import { getPort } from "./utils";
+import { getPort, serverLogger } from "./utils";
 
 export function startServer(server: Server, port: number) {
   try {
     server.listen(port, () => {
-      console.log(`Service is running on http://localhost:${port}`);
+      serverLogger.info({ port }, "Service is running");
     });
   } catch (e) {
-    console.log("Failed to start server", e);
+    serverLogger.error({ error: e }, "Failed to start server");
   }
 }
 
